@@ -1,47 +1,57 @@
 import React, { Component } from "react";
-import Swiper from "react-native-swiper";
-import { StyleSheet, Text, View } from "react-native";
-const styles = StyleSheet.create({
-  wrapper: {},
-  slide1: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#9DD6EB"
-  },
-  slide2: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#97CAE5"
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#92BBD9"
-  },
-  text: {
-    color: "#fff",
-    fontSize: 30,
-    fontWeight: "bold"
-  }
-});
-
-export default class ImageS extends Component {
+import { View, TextInput, StyleSheet } from "react-native";
+import { Button, Text } from "native-base";
+export default class Sighnin extends Component {
   render() {
     return (
-      <Swiper style={styles.wrapper} showsButtons={true}>
-        <View style={styles.slide1}>
-          <Text style={styles.text}>Hello Swiper</Text>
-        </View>
-        <View style={styles.slide2}>
-          <Text style={styles.text}>Beautiful</Text>
-        </View>
-        <View style={styles.slide3}>
-          <Text style={styles.text}>And simple</Text>
-        </View>
-      </Swiper>
+      <View style={styles.ConttentStyle}>
+        <Text style={{ color: "#FFFFFF" }}>LOG IN</Text>
+        <TextInput
+          placeholder="email"
+          // placeholderTextColor="rgba(255,255,255,0.7)"
+          returnKeyType="next"
+          onSubmitEditing={() => this.emailInput.focus()}
+          keyboardType="email-address"
+          style={styles.input}
+          autoCorrect={false}
+          autoCapitalize="none"
+          onChangeText={email => this.setState({ email })}
+        />
+
+        <TextInput
+          placeholder="password"
+          //placeholderTextColor="rgba(255,255,255,0.7)"
+          returnKeyType="go"
+          ref={input => (this.passwordInput = input)}
+          style={styles.input}
+          secureTextEntry={true}
+          autoCorrect={false}
+          autoCapitalize="none"
+          onChangeText={password => this.setState({ password })}
+        />
+        <Button transparent>
+          <Text style={{ fontSize: 15, color: "#FFFFFF" }}>Forget Login?</Text>
+        </Button>
+        <Text style={{ fontSize: 15, color: "#FFFFFF" }}>
+          -Or connect using-
+        </Text>
+      </View>
     );
   }
 }
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    width: 360,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    marginBottom: 10,
+
+    paddingHorizontal: 10
+  },
+  ConttentStyle: {
+    backgroundColor: "#0F1121",
+    marginTop: 200,
+    flexDirection: "column",
+    alignItems: "center"
+  }
+});
