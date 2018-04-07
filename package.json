@@ -2,9 +2,15 @@
   "name": "MoneyManager",
   "version": "1.1.0",
   "private": true,
+  "rnpm": {
+    "assets": [
+      "./assets/fonts"
+    ]
+  },
   "devDependencies": {
     "babel-eslint": "8.1.0",
-    "eslint": "4.14.0",
+    "eslint": "^4.19.1",
+    "eslint-config-expo": "^6.0.0",
     "eslint-plugin-flowtype": "2.40.1",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
@@ -15,6 +21,7 @@
     "flow-typed": "2.2.3",
     "husky": "0.14.3",
     "jest-expo": "^24.0.0",
+    "prettier": "^1.11.1",
     "react-native-scripts": "1.8.1",
     "react-test-renderer": "16.2.0"
   },
@@ -44,6 +51,9 @@
     "ramda": "^0.25.0",
     "react": "16.2.0",
     "react-native": "0.51.0",
+    "react-native-action-button": "^2.8.4",
+    "react-native-datepicker": "^1.6.0",
+    "react-native-elements": "^1.0.0-beta4",
     "react-native-google-signin": "^0.12.0",
     "react-native-swiper": "^1.5.13",
     "react-navigation": "1.0.0-beta.21",
@@ -53,6 +63,6 @@
     "redux-persist": "5.4.0",
     "redux-thunk": "2.2.0",
     "remote-redux-devtools": "0.5.0",
-    "remote-redux-devtools-on-debugger": "^0.8.0"
+    "remote-redux-devtools-on-debugger": "^0.8.3"
   }
 }
