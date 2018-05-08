@@ -70,7 +70,7 @@ const asyncStorage = [
   }
 ];
 
-export default class Overview extends Component {
+export default class History extends Component {
   state = {
     active: false
   };
