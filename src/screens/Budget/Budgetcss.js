@@ -63,12 +63,10 @@ const styles: any = StyleSheet.create({
     fontWeight: "bold",
     left: 10
   },
-  modal: {
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  modal4: {
-    height: 300
+  addtext: {
+    fontSize: 17,
+    fontFamily: "Roboto_medium",
+    top: 10
   }
 });
 export default styles;
