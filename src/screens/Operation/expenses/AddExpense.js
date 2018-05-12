@@ -117,7 +117,7 @@ class AddExpense extends Component {
               />
             </Item>
             <Item>
-              <Icon active name="md-cash" />
+              <Icon active name="logo-usd" />
               <Input
                 placeholder="Description"
                 returnKeyType="next"
@@ -129,7 +129,7 @@ class AddExpense extends Component {
             </Item>
             <Item>
               <Accountpicker
-                Account={this.state.Account}
+                Account={this.state.Category}
                 handleAccountChange={this.handleAccountChange}
               />
             </Item>

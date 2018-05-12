@@ -18,17 +18,17 @@ class Fab extends Component {
           title="Income"
           onPress={this.AddIncomes}
         >
-          <Icon name="md-create" style={styles.actionButtonIcon} />
+          <Icon name="md-trending-up" style={styles.actionButtonIcon} />
         </ActionButton.Item>
         <ActionButton.Item
           buttonColor="#3498db"
           title="Expense"
           onPress={this.AddExpense}
         >
-          <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
+          <Icon name="md-trending-down" style={styles.actionButtonIcon} />
         </ActionButton.Item>
-        <ActionButton.Item buttonColor="#1abc9c" title="Account" onPress={{}}>
-          <Icon name="md-done-all" style={styles.actionButtonIcon} />
+        <ActionButton.Item buttonColor="#1abc9c" title="Transfert" onPress={{}}>
+          <Icon name="md-swap" style={styles.actionButtonIcon} />
         </ActionButton.Item>
       </ActionButton>
     );
@@ -37,8 +37,8 @@ class Fab extends Component {
 
 const styles = StyleSheet.create({
   actionButtonIcon: {
-    fontSize: 20,
-    height: 22,
+    fontSize: 18,
+    height: 20,
     color: "white"
   }
 });

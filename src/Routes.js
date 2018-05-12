@@ -9,9 +9,11 @@ import AddExpense from "./screens/Operation/expenses/AddExpense";
 import EditExpense from "./screens/Operation/expenses/EditExpense";
 import AddIncomes from "./screens/Operation/AddIncomes/AddIncomes";
 import CategorySelect from "./screens/Operation/Commun/categorySelect/CategorySelect";
+
 import Login from "./screens/Authentication/login/Login";
 import Signup from "./screens/Authentication/login/Signup";
 
+import add from "./screens/Budget/add";
 import {
   TabNavigator,
   StackNavigator,
@@ -43,10 +45,8 @@ const Main = TabNavigator(
         } else if (routeName === "Budget") {
           iconName = `ios-briefcase${focused ? "" : "-outline"}`;
         } else if (routeName === "Profile") {
-          iconName = `ios-calendar${focused ? "" : "-outline"}`;
+          iconName = `ios-person-outline${focused ? "" : "-outline"}`;
         }
-        // You can return any component that you like here! We usually use an
-        // icon component from react-native-vector-icons
         return <Ionicons name={iconName} size={25} color={tintColor} />;
       }
     }),
@@ -77,13 +77,15 @@ const AppStack = StackNavigator(
     },
     CategorySelect: {
       screen: CategorySelect
+    },
+    add: {
+      screen: add
     }
   },
   {
     headerMode: "none"
   }
 );
-
 const AuthStack = StackNavigator(
   {
     Login: {

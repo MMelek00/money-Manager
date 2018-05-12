@@ -3,7 +3,7 @@ import DatePicker from "react-native-datepicker";
 const DatePickerr = ({ handleDateChange, date }) => {
   return (
     <DatePicker
-      style={{ width: 370 }}
+      style={{ width: 370, borderWidth: 0, borderColor: "#d6d7da" }}
       date={date}
       mode="date"
       format="MMM Do YYYY"
@@ -11,6 +11,7 @@ const DatePickerr = ({ handleDateChange, date }) => {
       maxDate="2050-01-01"
       confirmBtnText="Confirm"
       cancelBtnText="Cancel"
+      showIcon={false}
       onDateChange={_date => {
         handleDateChange(_date);
       }}

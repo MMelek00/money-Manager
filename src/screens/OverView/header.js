@@ -39,7 +39,7 @@ class HeaderComponet extends Component {
           <Grid>
             <Row>
               <Col style={styles.RowStyle}>
-                <CardItem style={{ borderRadius: 7 }}>
+                <CardItem style={{ borderRadius: 7, height: 66 }}>
                   <Row>
                     <Col>
                       <Icon
@@ -60,7 +60,7 @@ class HeaderComponet extends Component {
                 </CardItem>
               </Col>
               <Col style={styles.RowStyle}>
-                <CardItem style={{ borderRadius: 7 }}>
+                <CardItem style={{ borderRadius: 7, height: 66 }}>
                   <Row>
                     <Col>
                       <Icon

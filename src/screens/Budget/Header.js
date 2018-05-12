@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { CardItem, Text, Container } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import { connect } from "react-redux";
 import styles from "./Budgetcss";
-export default class Header extends Component {
+class Header extends Component {
   render() {
     return (
-      <Container>
+      <Container style={{ height: 200 }}>
         <View style={styles.HeaderContainer}>
           <Text style={styles.Headertext}>Budget</Text>
         </View>
@@ -17,8 +17,12 @@ export default class Header extends Component {
               <CardItem style={{ borderRadius: 10, height: 80 }}>
                 <Row>
                   <Col>
-                    <Text style={{ fontFamily: "Roboto" }}>Inscomes</Text>
-                    <Text style={styles.HeaderNum}>£ 26000</Text>
+                    <Text style={{ fontFamily: "Roboto", opacity: 0.5 }}>
+                      Inscomes
+                    </Text>
+                    <Text style={styles.HeaderNum}>
+                      {this.props.statistics.income}£
+                    </Text>
                   </Col>
                 </Row>
               </CardItem>
@@ -27,10 +31,12 @@ export default class Header extends Component {
               <CardItem style={{ borderRadius: 10, height: 80 }}>
                 <Row>
                   <Col>
-                    <Text style={{ fontSize: 15, fontFamily: "Roboto" }}>
+                    <Text style={{ fontFamily: "Roboto", opacity: 0.5 }}>
                       Expenses
                     </Text>
-                    <Text style={styles.HeaderNum}>£ 15.200</Text>
+                    <Text style={styles.HeaderNum}>
+                      {this.props.statistics.expenses}£
+                    </Text>
                   </Col>
                 </Row>
               </CardItem>
@@ -41,3 +47,4 @@ export default class Header extends Component {
     );
   }
 }
+export default connect(store => ({ statistics: store.statistics }))(Header);

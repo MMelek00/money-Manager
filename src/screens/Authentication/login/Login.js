@@ -71,7 +71,7 @@ export default class Login extends Component {
               placeholder="user@gmail.com"
               // placeholderTextColor="rgba(255,255,255,0.7)"
               returnKeyType="next"
-              onSubmitEditing={() => this.emailInput.focus()}
+              onSubmitEditing={() => this.passwordInput.focus()}
               keyboardType="email-address"
               style={styles.input}
               autoCorrect={false}
