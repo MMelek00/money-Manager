@@ -1,62 +1,64 @@
 import React, { Component } from "react";
-import { Platform, Text, View, StyleSheet } from "react-native";
-import { Constants, Location, Permissions } from "expo";
+import { StyleSheet, Dimensions, Text, View } from "react-native";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 
-export default class Locationx extends Component {
-  state = {
-    location: null,
-    errorMessage: null,
-  };
+const { width, height } = Dimensions.get("window");
 
-  componentWillMount() {
-    if (Platform.OS === "android" && !Constants.isDevice) {
-      this.setState({
-        errorMessage: "Oops, this will not work on Sketch in an Android emulator. Try it on your device!",
-      });
-    } else {
-      this._getLocationAsync();
-    }
+const ASPECT_RATIO = width / height;
+const LATITUDE = 37.78825;
+const LONGITUDE = -122.4324;
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+class Location extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
   }
 
-  _getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== "granted") {
-      this.setState({
-        errorMessage: "Permission to access location was denied",
-      });
-    }
-
-    let location = await Location.getCurrentPositionAsync({});
-    this.setState({ location });
-  };
-
   render() {
-    let text = "Waiting..";
-    if (this.state.errorMessage) {
-      text = this.state.errorMessage;
-    } else if (this.state.location) {
-      text = JSON.stringify(this.state.location);
-    }
-
     return (
-      <View style={styles.container}>
-        <Text style={styles.paragraph}>{text}</Text>
+      <View style={{ flex: 1 }}>
+        <View
+          style={{
+            backgroundColor: "green",
+            height: 100,
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <Text>Some div</Text>
+        </View>
+        <View style={styles.container}>
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            style={styles.map}
+            initialRegion={{
+              latitude: LATITUDE,
+              longitude: LONGITUDE,
+              latitudeDelta: LATITUDE_DELTA,
+              longitudeDelta: LONGITUDE_DELTA
+            }}
+          />
+        </View>
       </View>
     );
   }
 }
 
+Location.propTypes = {
+  provider: MapView.ProviderPropType
+};
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: "#ecf0f1",
+    ...StyleSheet.absoluteFillObject,
+    top: 100,
+    justifyContent: "flex-end",
+    alignItems: "center"
   },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    textAlign: "center",
-  },
+  map: {
+    ...StyleSheet.absoluteFillObject
+  }
 });
+export default Location;

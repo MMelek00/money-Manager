@@ -1,13 +1,20 @@
 import React, { Component } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import { connect } from "react-redux";
-
-import { Text, Content, Item, Input, View, Icon, Button } from "native-base";
-import { LinearGradient } from "expo";
-
+//import { SQLite } from "expo";
+import {
+  View,
+  Content,
+  Item,
+  Input,
+  Icon,
+  Button,
+  Text,
+  Title
+} from "native-base";
+import { Ionicons } from "@expo/vector-icons";
 import Accountpicker from "../Commun/Accountpicker";
 import DatePicker from "../Commun/Datepickerr";
-import IncomeCategory from "./CategoryIncomes";
 import { withNavigation } from "react-navigation";
 class AddIncomes extends Component {
   constructor(props) {
@@ -17,14 +24,15 @@ class AddIncomes extends Component {
       Date: new Date(),
       Description: "",
       Category: "Awards",
-      Account: "Cash"
+      Account: "Cash",
+      isClicked: false
     };
   }
-  goBack = () => {
-    this.props.navigation.goBack();
-  };
   pressHandler = () => {
-    const { Amount, Date, Description, Category, Account } = this.state;
+    this.setState({ isClicked: true });
+    const { Amount, Date, Description, Account } = this.state;
+    const { params } = this.props.navigation.state;
+    const Category = params ? params.Category : null;
     this.props.addTransaction({
       id: 1,
       Amount,
@@ -35,105 +43,132 @@ class AddIncomes extends Component {
       Type: "income"
     });
     this.props.addIncomes(Amount);
-    this.props.navigation.goBack();
+    this.props.navigation.pop(2);
   };
   handleDateChange = value => {
     this.setState({ Date: value });
   };
-  handleCategoryChange = value => {
-    this.setState({ Category: value });
-  };
   handleAccountChange = value => {
     this.setState({ Account: value });
   };
+  goBack = () => {
+    this.props.navigation.pop(2);
+  };
   render() {
+    const { params } = this.props.navigation.state;
+    const Category = params ? params.Category : null;
+    let imageUri;
+    switch (Category) {
+      case "Salary":
+        imageUri = require("../Commun/CategoryImage/Salary.jpg");
+        break;
+      case "Investement":
+        imageUri = require("../Commun/CategoryImage/Investment.jpg");
+        break;
+      case "Gift":
+        imageUri = require("../Commun/CategoryImage/Gift.jpg");
+        break;
+      case "Saving":
+        imageUri = require("../Commun/CategoryImage/Saving.jpg");
+        break;
+      default:
+        imageUri = require("../Commun/CategoryImage/Salary.jpg");
+        break;
+    }
     return (
-      <LinearGradient
-        colors={["#FF5F6D", "#FFC371"]}
-        style={styles.ContainerStyle}
-        start={[0.1, 0.1]}
-      >
+      <View>
+        <Image style={{ height: 225, width: 450 }} source={imageUri} />
+        <Button transparent onPress={this.goBack} style={styles.buttonStyle}>
+          <Icon style={{ color: "#FFFFFF" }} name="close" />
+        </Button>
         <View style={styles.HeaderStyle}>
-          <Button transparent onPress={this.goBack}>
-            <Icon name="close" style={{ color: "#FFFFFF" }} />
-          </Button>
-          <Text>New Income</Text>
+          <Title style={{ fontSize: 30, textAlign: "center" }}>
+            {Category}
+          </Title>
         </View>
 
         <Content style={styles.ContentStyle}>
-          <Item>
-            <Icon active name="md-cash" />
-            <Input
-              placeholder="Money"
-              style={{ color: "#FFFFFF" }}
-              returnKeyType="next"
-              keyboardType="numeric"
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={Amount => this.setState({ Amount })}
-            />
-          </Item>
-          <Item>
-            <DatePicker
-              date={this.state.Date}
-              handleDateChange={this.handleDateChange}
-            />
-          </Item>
-          <Item>
-            <Icon active name="md-cash" />
-            <Input
-              placeholder="Description"
-              style={{ color: "#FFFFFF" }}
-              returnKeyType="next"
-              keyboardType="default"
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={Description => this.setState({ Description })}
-            />
-          </Item>
-          <Item>
-            <Icon active name="md-cash" />
-            <IncomeCategory
-              Category={this.state.Category}
-              handleCategoryChange={this.handleCategoryChange}
-            />
-          </Item>
-          <Item>
-            <Accountpicker
-              Account={this.state.Account}
-              handleAccountChange={this.handleAccountChange}
-            />
-          </Item>
-          <Button block danger onPress={this.pressHandler}>
+          <View style={{ padding: 20 }}>
+            <Item>
+              <Ionicons style={styles.iconStyle} name="logo-euro" />
+              <Input
+                placeholder="Money"
+                returnKeyType="next"
+                keyboardType="numeric"
+                autoCorrect={false}
+                autoCapitalize="none"
+                onChangeText={Amount => this.setState({ Amount })}
+              />
+            </Item>
+            <Item>
+              <DatePicker
+                date={this.state.Date}
+                handleDateChange={this.handleDateChange}
+              />
+            </Item>
+            <Item>
+              <Ionicons style={styles.iconStyle} name="ios-create" />
+              <Input
+                placeholder="Description"
+                returnKeyType="next"
+                keyboardType="default"
+                autoCorrect={false}
+                autoCapitalize="none"
+                onChangeText={Description => this.setState({ Description })}
+              />
+            </Item>
+            <Item>
+              <Ionicons style={styles.iconStyle} name="ios-briefcase" />
+              <Accountpicker
+                Account={this.state.Account}
+                handleAccountChange={this.handleAccountChange}
+              />
+            </Item>
+          </View>
+          <Button
+            disabled={this.state.isClicked}
+            block
+            success
+            onPress={this.pressHandler}
+          >
             <Text>ADD</Text>
           </Button>
         </Content>
-      </LinearGradient>
+      </View>
     );
   }
 }
 const styles = StyleSheet.create({
   ContainerStyle: {
-    padding: 20,
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     position: "absolute"
   },
+  buttonStyle: {
+    backgroundColor: "#f1404b",
+    position: "absolute",
+    borderRadius: 100,
+    margin: 10,
+    right: 0
+  },
   ContentStyle: {
-    backgroundColor: "white",
     borderRadius: 20,
-    padding: 20,
     left: 20,
     right: 20,
     position: "absolute",
-    top: 90
+    top: 220
   },
   HeaderStyle: {
-    flex: 1,
-    flexDirection: "row"
-  }
+    //flex: 1,
+    flexDirection: "row",
+    //textAlignVertical: "center"
+    position: "absolute",
+    top: 170,
+    left: 40
+  },
+  iconStyle: { fontSize: 25, color: "#FE788D" }
 });
 const mapDispatchToProps = dispatch => {
   return {

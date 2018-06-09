@@ -3,5 +3,7 @@ export const firebaseConfig = {
   authDomain: "moneysaver-f9a18.firebaseapp.com",
   databaseURL: "https://moneysaver-f9a18.firebaseio.com",
   projectId: "moneysaver-f9a18",
-  stoageBucket: ""
+  storageBucket: "moneysaver-f9a18.appspot.com",
+  messagingSenderId: "488890179565",
+  persistence: true
 };

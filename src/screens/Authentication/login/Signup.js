@@ -12,11 +12,14 @@ import {
   Left,
   Body,
   Title,
-  Right
+  Right,
+  Spinner
 } from "native-base";
+import { Image } from "react-native";
+import { withNavigation } from "react-navigation";
 import SocialButtons from "./SocialButtons";
 
-export default class Signup extends Component {
+class Signup extends Component {
   goBack = () => {
     this.props.navigation.navigate("Login");
   };
@@ -25,32 +28,43 @@ export default class Signup extends Component {
     this.state = {
       Username: "",
       email: "",
-      password: ""
+      password: "",
+      isloading: false,
+      error: ""
     };
   }
-  signUpuser = (email, password) => {
+  renderSpiner() {
+    if (this.state.isloading) {
+      return <Spinner />;
+    }
+    return (
+      <Button Dark onPress={this.OnsignupPress.bind(this)}>
+        <Text style={styles.TextStyle}>SignUp</Text>
+      </Button>
+    );
+  }
+  OnsignupPress() {
+    const { email, password } = this.state;
+    this.setState({ error: "", isloading: true });
     try {
-      if (this.state.password.length < 8) {
-        //alert("Please enter atleast 8 caracters");
-        return;
-      }
       firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
+        .then(this.setState({ isloading: false, error: "" }))
         .then(response => {
           AsyncStorage.setItem("userId", response.uid).then(() => {
             this.props.navigation.navigate("App");
           });
         });
     } catch (err) {
-      this.setState({ error: err.message });
+      this.setState({ error: "Authentification failed", isloading: false });
     }
-  };
+  }
   componentWillUnmount() {
     var user = firebase.auth().currentUser;
     user.updateProfile({
-      displayName: this.state.Username
-      // photoURL: "https://example.com/jane-q-user/profile.jpg"
+      displayName: this.state.Username,
+      photoURL: "https://example.com/jane-q-user/profile.jpg"
     });
   }
   render() {
@@ -58,9 +72,7 @@ export default class Signup extends Component {
       <Container>
         <Header style={{ backgroundColor: "#000000" }}>
           <Left />
-          <Body>
-            <Title>MonekyIcon</Title>
-          </Body>
+          <Body />
           <Right>
             <Button transparent onPress={this.goBack}>
               <Title>LogIn</Title>
@@ -68,6 +80,17 @@ export default class Signup extends Component {
           </Right>
         </Header>
         <Content style={{ backgroundColor: "#0F1121" }}>
+          <View style={{ position: "absolute", paddingHorizontal: 160 }}>
+            <Image
+              source={require("./logo2.png")}
+              style={{
+                alignSelf: "center",
+                width: 50,
+                height: 50
+              }}
+            />
+            <Title>MoneyMan</Title>
+          </View>
           <View style={styles.ConttentStyle}>
             <Text style={{ color: "#FFFFFF" }}>Sign up-its FREE!</Text>
             <TextInput
@@ -104,6 +127,9 @@ export default class Signup extends Component {
               autoCapitalize="none"
               onChangeText={password => this.setState({ password })}
             />
+            <View>
+              <Text style={styles.errorStyle}>{this.state.error}</Text>
+            </View>
             <Text style={{ fontSize: 15, color: "#262525" }}>
               by signing up, I accept Terms of Service
             </Text>
@@ -115,14 +141,7 @@ export default class Signup extends Component {
         </Content>
         <Footer>
           <FooterTab style={{ backgroundColor: "#000000" }}>
-            <Button
-              Dark
-              onPress={() =>
-                this.signUpuser(this.state.email, this.state.password)
-              }
-            >
-              <Text style={styles.TextStyle}>SignUp</Text>
-            </Button>
+            {this.renderSpiner()}
           </FooterTab>
         </Footer>
       </Container>
@@ -147,5 +166,11 @@ const styles = StyleSheet.create({
     marginTop: 200,
     flexDirection: "column",
     alignItems: "center"
+  },
+  errorStyle: {
+    fontWeight: "bold",
+    fontSize: 15,
+    color: "red"
   }
 });
+export default withNavigation(Signup);

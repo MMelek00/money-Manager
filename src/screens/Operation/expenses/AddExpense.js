@@ -1,20 +1,21 @@
 import React, { Component } from "react";
 import { StyleSheet, Image } from "react-native";
 import { connect } from "react-redux";
-//import { SQLite } from "expo";
 import {
   View,
   Content,
   Item,
   Input,
-  Icon,
   Button,
+  Icon,
   Text,
   Title
 } from "native-base";
-
+import * as firebase from "firebase";
+import { Ionicons } from "@expo/vector-icons";
 import Accountpicker from "../Commun/Accountpicker";
 import DatePicker from "../Commun/Datepickerr";
+//import place from "../Commun/Place";
 import { withNavigation } from "react-navigation";
 class AddExpense extends Component {
   constructor(props) {
@@ -29,9 +30,6 @@ class AddExpense extends Component {
       isClicked: false
     };
   }
-  goBack = () => {
-    this.props.navigation.pop(2);
-  };
   pressHandler = () => {
     this.setState({ isClicked: true });
     const { Amount, Date, Description, Account, Place } = this.state;
@@ -53,7 +51,9 @@ class AddExpense extends Component {
   handleDateChange = value => {
     this.setState({ Date: value });
   };
-
+  goBack = () => {
+    this.props.navigation.pop(2);
+  };
   handleAccountChange = value => {
     this.setState({ Account: value });
   };
@@ -101,6 +101,7 @@ class AddExpense extends Component {
         <Content style={styles.ContentStyle}>
           <View style={{ padding: 20 }}>
             <Item>
+              <Ionicons style={styles.iconStyle} name="logo-euro" />
               <Input
                 placeholder="Money"
                 returnKeyType="next"
@@ -117,7 +118,7 @@ class AddExpense extends Component {
               />
             </Item>
             <Item>
-              <Icon active name="logo-usd" />
+              <Ionicons style={styles.iconStyle} name="ios-create" />
               <Input
                 placeholder="Description"
                 returnKeyType="next"
@@ -128,13 +129,14 @@ class AddExpense extends Component {
               />
             </Item>
             <Item>
+              <Ionicons style={styles.iconStyle} name="ios-briefcase" />
               <Accountpicker
-                Account={this.state.Category}
+                Account={this.state.Account}
                 handleAccountChange={this.handleAccountChange}
               />
             </Item>
             <Item>
-              <Icon active name="md-locate" />
+              <Ionicons style={styles.iconStyle} name="ios-flag" />
               <Input placeholder="Place" />
             </Item>
           </View>
@@ -182,9 +184,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 170,
     left: 40
-  }
+  },
+  iconStyle: { fontSize: 25, color: "#FE788D" }
 });
-
 const mapDispatchToProps = dispatch => {
   return {
     addTransaction: transaction => {
@@ -198,6 +200,13 @@ const mapDispatchToProps = dispatch => {
         type: "ADD_EXPENSE",
         payload: Amount
       });
+    },
+    addfirebase: transaction => {
+      const { currentUser } = firebase.auth();
+      firebase
+        .database()
+        .ref(`/users/${currentUser.uid}/operation`)
+        .push(transaction.Amount);
     }
   };
 };

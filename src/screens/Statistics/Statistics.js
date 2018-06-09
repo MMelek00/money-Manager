@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 //import { Text } from "native-base";
-import ModalExample from "./ModalExample.js";
+import Location from "../Operation/Commun/Place";
 export default class Statistics extends Component {
   render() {
-    return <ModalExample />;
+    return <Location />;
   }
 }

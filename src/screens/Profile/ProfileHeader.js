@@ -1,55 +1,54 @@
 import React, { Component } from "react";
 import * as firebase from "firebase";
 import { ImagePicker } from "expo";
-import {
-  StyleSheet,
-  View,
-  Image,
-  AsyncStorage,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo";
 import { Text, Icon } from "native-base";
+import { withNavigation } from "react-navigation";
 
 class ProfileHeader extends Component {
-  state = {
-    username: "mliki Melek",
-    urii: "https://facebook.github.io/react-native/docs/assets/favicon.png"
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "User Name ",
+      urii: "https://facebook.github.io/react-native/docs/assets/favicon.png"
+    };
+    this.handleLogout = this.handleLogout.bind(this);
+  }
   componentWillMount() {
     const user = firebase.auth().currentUser;
-    const value = AsyncStorage.getItem("image");
-    let urii;
-    if (JSON.stringify(value) == null) {
-      urii = "https://facebook.github.io/react-native/docs/assets/favicon.png";
-    } else {
-      urii = JSON.stringify(value);
-    }
-    this.setState({ urii });
-
     if (user) {
       this.setState({
-        username: user.displayName
+        username: user.displayName,
+        urii: user.photoURL
       });
     }
   }
   handleLogout = async () => {
-    await AsyncStorage.clear();
-    this.props.navigation.navigate("Auth");
+    try {
+      await firebase
+        .auth()
+        .signOut()
+        .then(this.props.navigation.navigate("Auth"));
+    } catch (e) {
+      //console.log(e);
+    }
   };
 
   _pickImage = async () => {
+    const user = firebase.auth().currentUser;
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3]
     });
     if (!result.cancelled) {
       this.setState({ urii: result.uri });
-      AsyncStorage.setItem("image", JSON.stringify(result.uri));
+      user.updateProfile({
+        photoURL: result.uri
+      });
     }
   };
   render() {
-    let { urii } = this.state;
     const imageBorder = transparency => {
       return {
         borderWidth: 1,
@@ -67,7 +66,7 @@ class ProfileHeader extends Component {
         end={[0.9, 0]}
       >
         <TouchableOpacity
-          onPress={this.handleLogout}
+          onPress={this.handleLogout.bind(this)}
           style={{
             alignSelf: "flex-end",
             padding: 15,
@@ -84,7 +83,7 @@ class ProfileHeader extends Component {
                   <Image
                     style={{ width: 90, height: 90, borderRadius: 100 }}
                     source={{
-                      uri: urii
+                      uri: this.state.urii
                     }}
                   />
                 </TouchableOpacity>
@@ -127,4 +126,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ProfileHeader;
+export default withNavigation(ProfileHeader);

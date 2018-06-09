@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-import { CardItem, Text, Container } from "native-base";
+import { LinearGradient } from "expo";
+import { CardItem, Text } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { connect } from "react-redux";
 import styles from "./Budgetcss";
 class Header extends Component {
   render() {
     return (
-      <Container style={{ height: 200 }}>
+      <LinearGradient
+        colors={["#FE788D", "#FF9876"]}
+        style={{ height: 225 }}
+        start={[0, 0]}
+        end={[0.9, 0]}
+      >
         <View style={styles.HeaderContainer}>
           <Text style={styles.Headertext}>Budget</Text>
         </View>
@@ -43,7 +49,7 @@ class Header extends Component {
             </Col>
           </Row>
         </Grid>
-      </Container>
+      </LinearGradient>
     );
   }
 }

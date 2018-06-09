@@ -7,7 +7,7 @@ import {
   Left,
   Body,
   Right,
-  Icon,
+
   Text,
   Card,
   CardItem

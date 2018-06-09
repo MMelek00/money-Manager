@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import styles from "./Budgetcss";
-import { Text, Content, View, ListItem } from "native-base";
+import { Text, Content, ListItem } from "native-base";
+import { View, ScrollView } from "react-native";
 
+import BudgetFab from "../../component/BudgetFab";
 import OutcomCard from "./OutcomCard";
 import Header from "./Header";
 import IncomeCard from "./Incomecard";
-import ActionButton from "react-native-action-button";
-export default class BudgetScreen extends Component {
-  addbudget = () => {
-    this.props.navigation.navigate("add");
-  };
+import { connect } from "react-redux";
+class BudgetScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -17,30 +16,33 @@ export default class BudgetScreen extends Component {
           <Header />
         </View>
         <Content style={{ flex: 1 }}>
-          <View>
+          <View style={{ height: 200 }}>
             <ListItem itemDivider>
               <Text style={styles.hometext}> Incomes</Text>
             </ListItem>
-            <View>
-              <IncomeCard />
-            </View>
+            <ScrollView>
+              {this.props.budgetI.map((budgett, index) => (
+                <IncomeCard budgett={budgett} key={index} />
+              ))}
+            </ScrollView>
           </View>
-          <View>
+          <View style={{ flex: 2 }}>
             <ListItem itemDivider>
               <Text style={styles.hometext}> Outcomes</Text>
             </ListItem>
-            <View>
-              <OutcomCard />
-            </View>
+            <ScrollView>
+              {this.props.budgets.map((budget, index) => (
+                <OutcomCard budget={budget} key={index} />
+              ))}
+            </ScrollView>
           </View>
         </Content>
-        <ActionButton
-          buttonColor="#5068F8"
-          size={50}
-          position="center"
-          onPress={this.addbudget}
-        />
+        <BudgetFab />
       </View>
     );
   }
 }
+export default connect(store => ({
+  budgets: store.budgets,
+  budgetI: store.budgetI
+}))(BudgetScreen);

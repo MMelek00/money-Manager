@@ -1,10 +1,10 @@
-const transactions = (state = [], action) => {
+const budgetI = (state = [], action) => {
   switch (action.type) {
-    case "ADD_TRANSACTION":
+    case "ADD_BUDGETIncome":
       return [action.payload, ...state];
-    case "EDIT_TRANSACTION":
+    case "EDIT_BUDGETIncome":
       const index = state.findIndex(
-        transaction => transaction.id === action.payload.id
+        budgett => budgett.id === action.payload.id
       );
       return [
         ...state.slice(0, index),
@@ -16,4 +16,4 @@ const transactions = (state = [], action) => {
   }
 };
 
-export default transactions;
+export default budgetI;

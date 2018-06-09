@@ -9,18 +9,20 @@ import AddExpense from "./screens/Operation/expenses/AddExpense";
 import EditExpense from "./screens/Operation/expenses/EditExpense";
 import AddIncomes from "./screens/Operation/AddIncomes/AddIncomes";
 import CategorySelect from "./screens/Operation/Commun/categorySelect/CategorySelect";
+import IncomeSelect from "./screens/Operation/Commun/categorySelect/IncomeSelect";
 
 import Login from "./screens/Authentication/login/Login";
 import Signup from "./screens/Authentication/login/Signup";
-
-import add from "./screens/Budget/add";
+import SocialButtons from "./screens/Authentication/login/SocialButtons";
+import BudgetIncome from "./screens/Budget/budgetIncome";
+import BudgetExpense from "./screens/Budget/budgetexpense";
 import {
   TabNavigator,
   StackNavigator,
   TabBarBottom,
   SwitchNavigator
 } from "react-navigation";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import AuthLoadingScreen from "./screens/Authentication/AuthLoadingScreen";
 
 const Main = TabNavigator(
@@ -37,15 +39,15 @@ const Main = TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         if (routeName === "Overview") {
-          iconName = `ios-information-circle${focused ? "" : "-outline"}`;
+          iconName = `ios-home${focused ? "" : "-outline"}`;
         } else if (routeName === "History") {
-          iconName = `ios-briefcase${focused ? "" : "-outline"}`;
+          iconName = `ios-time${focused ? "" : "-outline"}`;
         } else if (routeName === "Statistics") {
           iconName = `ios-pie${focused ? "" : "-outline"}`;
         } else if (routeName === "Budget") {
-          iconName = `ios-briefcase${focused ? "" : "-outline"}`;
+          iconName = `ios-podium${focused ? "" : "-outline"}`;
         } else if (routeName === "Profile") {
-          iconName = `ios-person-outline${focused ? "" : "-outline"}`;
+          iconName = `ios-person${focused ? "" : "-outline"}`;
         }
         return <Ionicons name={iconName} size={25} color={tintColor} />;
       }
@@ -78,8 +80,14 @@ const AppStack = StackNavigator(
     CategorySelect: {
       screen: CategorySelect
     },
-    add: {
-      screen: add
+    IncomeSelect: {
+      screen: IncomeSelect
+    },
+    BudgetExpense: {
+      screen: BudgetExpense
+    },
+    BudgetIncome: {
+      screen: BudgetIncome
     }
   },
   {
@@ -94,6 +102,9 @@ const AuthStack = StackNavigator(
 
     Signup: {
       screen: Signup
+    },
+    SocialButtons: {
+      screen: SocialButtons
     }
   },
   {

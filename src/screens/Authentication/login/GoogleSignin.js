@@ -26,10 +26,10 @@ export default class GoogleSignin extends React.Component {
           photoUrl: result.user.photoUrl
         });
       } else {
-        console.log("cancelled");
+        //console.log("cancelled");
       }
     } catch (e) {
-      console.log("error", e);
+     // console.log("error", e);
     }
   };
   render() {

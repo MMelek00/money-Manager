@@ -21,8 +21,7 @@ const styles: any = StyleSheet.create({
   },
   cardtext3: {
     fontFamily: "Roboto_medium",
-    //alignSelf: "flex-end",
-    left: 250,
+
     fontSize: 18,
     opacity: 0.5,
     color: "#5068F8"

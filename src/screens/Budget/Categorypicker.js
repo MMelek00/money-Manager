@@ -1,17 +1,21 @@
 import React from "react";
 import { StyleSheet, View, Picker } from "react-native";
-const Categorypicker = ({ handleCatgoryChange, Category }) => {
+const Categorypicker = ({ handleCategoryChange, Category }) => {
   return (
     <View style={styles.MainContainer}>
       <Picker
         selectedValue={Category}
         onValueChange={(itemValue, itemIndex) => {
-          handleCatgoryChange(itemValue);
+          handleCategoryChange(itemValue);
         }}
       >
         <Picker.Item label="Shopping " value="Shopping" />
-        <Picker.Item label="Saving" value="Saving" />
-        <Picker.Item label="Bank" value="Bank" />
+        <Picker.Item label="clothing" value="clothing" />
+        <Picker.Item label="education" value="education" />
+        <Picker.Item label="family" value="family" />
+        <Picker.Item label="healthcare" value="healthcare" />
+        <Picker.Item label="house" value="house" />
+        <Picker.Item label="food_Drink" value="food_Drink" />
       </Picker>
     </View>
   );

@@ -1,2 +1,2 @@
 export const androidClientId =
-  "3265557817494-g4btposjfm48iakr4t4atdd24721b31a.apps.googleusercontent.com";
+  "321636120418-nfpc02d38o66ep1kok2vvln0r2qsgo4i.apps.googleusercontent.com";

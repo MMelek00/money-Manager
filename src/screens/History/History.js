@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import * as R from "ramda";
-import { Container, View, Button, Icon, Fab, List } from "native-base";
+import { Container, View, List } from "native-base";
 import ExpensesByMonth from "./ExpensesByMonth";
 import moment from "moment";
 
@@ -92,25 +92,6 @@ export default class History extends Component {
             dataArray={Object.keys(expensesByDate)}
             renderRow={key => <ExpensesByMonth expense={expensesByDate[key]} />}
           />
-          <Fab
-            active={this.state.active}
-            direction="up"
-            containerStyle={{}}
-            style={{ backgroundColor: "#5067FF" }}
-            position="bottomRight"
-            onPress={() => this.setState({ active: !this.state.active })}
-          >
-            <Icon name="share" />
-            <Button style={{ backgroundColor: "#34A34F" }}>
-              <Icon name="logo-whatsapp" />
-            </Button>
-            <Button style={{ backgroundColor: "#3B5998" }}>
-              <Icon name="logo-facebook" />
-            </Button>
-            <Button disabled style={{ backgroundColor: "#DD5144" }}>
-              <Icon name="mail" />
-            </Button>
-          </Fab>
         </View>
       </Container>
     );

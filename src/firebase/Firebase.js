@@ -1,17 +1,6 @@
 import * as firebase from "firebase";
 import { firebaseConfig } from "./FirebaseCon";
+firebase.initializeApp(firebaseConfig);
 
-let instance = null;
-
-class firebaseService {
-  constructor() {
-    if (!instance) {
-      this.app = firebase.initializeApp(firebaseConfig);
-      instance = this;
-    }
-    return instance;
-  }
-}
-
-const firebaseService = new firebaseService().app;
-export default firebaseService;
+const databaseRef = firebase.database().ref();
+export const todosRef = databaseRef.child("operation");

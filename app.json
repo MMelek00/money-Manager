@@ -3,8 +3,8 @@
     "sdkVersion": "24.0.0",
     "slug": "MoneyManager",
     "loading": {
-      "hideExponentText": false,
-      "icon": "./assets/loading.png"
+      "hideExponentText": true,
+      "icon": "./assets/Logo.png"
     },
     "orientation": "portrait",
     "primaryColor": "#cccccc",
@@ -15,6 +15,9 @@
     "androidStatusBar": {
       "barStyle": "light-content",
       "backgroundColor": "#0F1121"
+    },
+    "android": {
+      "package": "com.MANM.MoneyMan"
     }
   }
 }

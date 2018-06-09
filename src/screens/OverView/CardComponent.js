@@ -3,7 +3,6 @@ import { StyleSheet, TouchableOpacity, Image, View } from "react-native";
 import { CardItem, Text, Right, Left, Body } from "native-base";
 import { withNavigation } from "react-navigation";
 import moment from "moment";
-
 const CardComponent = ({ transaction, navigation }) => {
   let imageUri;
   switch (transaction.Category) {
@@ -27,6 +26,18 @@ const CardComponent = ({ transaction, navigation }) => {
       break;
     case "family":
       imageUri = require("../Operation/Commun/CategoryImage/Family.jpg");
+      break;
+    case "Gift":
+      imageUri = require("../Operation/Commun/CategoryImage/Gift.jpg");
+      break;
+    case "Salary":
+      imageUri = require("../Operation/Commun/CategoryImage/Salary.jpg");
+      break;
+    case "Saving":
+      imageUri = require("../Operation/Commun/CategoryImage/Saving.jpg");
+      break;
+    case "Investement":
+      imageUri = require("../Operation/Commun/CategoryImage/Investment.jpg");
       break;
     default:
       imageUri = require("../Operation/Commun/CategoryImage/Shopping.jpg");

@@ -4,13 +4,13 @@ import {
   List,
   ListItem,
   Text,
-  Icon,
   Left,
   Body,
   Right,
   Switch
 } from "native-base";
 import { StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 export default class ProfileOption extends Component {
   render() {
     return (
@@ -18,7 +18,7 @@ export default class ProfileOption extends Component {
         <List>
           <ListItem icon>
             <Left>
-              <Icon style={styles.iconStyle} name="ios-alert" />
+              <Ionicons style={styles.iconStyle} name="ios-alarm" />
             </Left>
             <Body>
               <Text>Alert and Notification</Text>
@@ -32,7 +32,7 @@ export default class ProfileOption extends Component {
 
           <ListItem icon>
             <Left>
-              <Icon style={styles.iconStyle} name="ios-download-outline" />
+              <Ionicons style={styles.iconStyle} name="md-archive" />
             </Left>
             <Body>
               <Text>Import Data</Text>
@@ -40,7 +40,7 @@ export default class ProfileOption extends Component {
           </ListItem>
           <ListItem icon>
             <Left>
-              <Icon style={styles.iconStyle} name="md-sync" />
+              <Ionicons style={styles.iconStyle} name="md-sync" />
             </Left>
             <Body>
               <Text>Synchronization</Text>
@@ -51,7 +51,7 @@ export default class ProfileOption extends Component {
 
           <ListItem icon>
             <Left>
-              <Icon style={styles.iconStyle} name="local-atm" />
+              <Ionicons style={styles.iconStyle} name="ios-card" />
             </Left>
             <Body>
               <Text>ATM Finder</Text>
@@ -59,7 +59,7 @@ export default class ProfileOption extends Component {
           </ListItem>
           <ListItem icon>
             <Left>
-              <Icon style={styles.iconStyle} name="bank" />
+              <Ionicons style={styles.iconStyle} name="ios-cash" />
             </Left>
             <Body>
               <Text>Bank Finder</Text>
@@ -70,7 +70,7 @@ export default class ProfileOption extends Component {
 
           <ListItem icon>
             <Left>
-              <Icon style={styles.iconStyle} name="ios-disc-outline" />
+              <Ionicons style={styles.iconStyle} name="ios-disc-outline" />
             </Left>
             <Body>
               <Text>Goal</Text>
@@ -81,7 +81,7 @@ export default class ProfileOption extends Component {
 
           <ListItem icon>
             <Left>
-              <Icon style={styles.iconStyle} name="ios-contact-outline" />
+              <Ionicons style={styles.iconStyle} name="ios-contact" />
             </Left>
             <Body>
               <Text>Invite your friend</Text>
@@ -89,7 +89,7 @@ export default class ProfileOption extends Component {
           </ListItem>
           <ListItem icon>
             <Left>
-              <Icon style={styles.iconStyle} name="rate-review" />
+              <Ionicons style={styles.iconStyle} name="ios-thumbs-up" />
             </Left>
             <Body>
               <Text>Rate Us</Text>
@@ -97,7 +97,7 @@ export default class ProfileOption extends Component {
           </ListItem>
           <ListItem icon>
             <Left>
-              <Icon style={styles.iconStyle} name="feedback" />
+              <Ionicons style={styles.iconStyle} name="md-chatbubbles" />
             </Left>
             <Body>
               <Text>FeedBack</Text>
@@ -110,7 +110,7 @@ export default class ProfileOption extends Component {
 
           <ListItem icon>
             <Left>
-              <Icon style={styles.iconStyle} name="ios-hand-outline" />
+              <Ionicons style={styles.iconStyle} name="ios-hand" />
             </Left>
             <Body>
               <Text>Privacy Policy</Text>
@@ -118,7 +118,7 @@ export default class ProfileOption extends Component {
           </ListItem>
           <ListItem icon>
             <Left>
-              <Icon style={styles.iconStyle} name="graduation-cap" />
+              <Ionicons style={styles.iconStyle} name="ios-create" />
             </Left>
             <Body>
               <Text>Terms Of Service</Text>
@@ -126,7 +126,7 @@ export default class ProfileOption extends Component {
           </ListItem>
           <ListItem icon>
             <Left>
-              <Icon style={styles.iconStyle} name="flag" />
+              <Ionicons style={styles.iconStyle} name="ios-key" />
             </Left>
             <Body>
               <Text>Licenses</Text>

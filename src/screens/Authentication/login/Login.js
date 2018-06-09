@@ -11,12 +11,15 @@ import {
   Left,
   Body,
   Title,
-  Right
+  Right,
+  Spinner
 } from "native-base";
+import { Image } from "react-native";
 import * as firebase from "firebase";
 import SocialButtons from "./SocialButtons";
+import { withNavigation } from "react-navigation";
 
-export default class Login extends Component {
+class Login extends Component {
   signup = () => {
     this.props.navigation.navigate("Signup");
   };
@@ -26,38 +29,47 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
+      isloading: false,
       error: ""
     };
   }
-
-  loginUser = (email, password) => {
+  onLoginPress() {
+    const { email, password } = this.state;
+    this.setState({ error: "", isloading: true });
     try {
       firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
+        .then(this.setState({ isloading: false, error: "" }))
         .then(response => {
           AsyncStorage.setItem("userId", response.uid).then(() => {
             this.props.navigation.navigate("App");
           });
         });
     } catch (err) {
-      this.setState({ error: err.message });
+      this.setState({ error: "Authentification failed", isloading: false });
     }
-  };
-
-  // _signInAsync = async () => {
-  //   await AsyncStorage.setItem('userToken', 'abc');
-  //   this.props.navigation.navigate('App');
-  // };
-
+  }
+  renderSpiner() {
+    if (this.state.isloading) {
+      return (
+        <Spinner
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        />
+      );
+    }
+    return (
+      <Button Dark onPress={this.onLoginPress.bind(this)}>
+        <Text style={styles.TextStyle}>LOG IN</Text>
+      </Button>
+    );
+  }
   render() {
     return (
       <Container>
         <Header style={{ backgroundColor: "#000000" }}>
           <Left />
-          <Body>
-            <Title>MoneyIcCon</Title>
-          </Body>
+          <Body style={{ flexDirection: "row" }} />
           <Right>
             <Button transparent onPress={this.signup}>
               <Title>Sign Up</Title>
@@ -65,6 +77,17 @@ export default class Login extends Component {
           </Right>
         </Header>
         <Content style={{ backgroundColor: "#0F1121" }}>
+          <View style={{ position: "absolute", paddingHorizontal: 160 }}>
+            <Image
+              source={require("./logo2.png")}
+              style={{
+                alignSelf: "center",
+                width: 50,
+                height: 50
+              }}
+            />
+            <Title>MoneyMan</Title>
+          </View>
           <View style={styles.ConttentStyle}>
             <Text style={{ color: "#FFFFFF" }}>LOG IN</Text>
             <TextInput
@@ -90,8 +113,9 @@ export default class Login extends Component {
               autoCapitalize="none"
               onChangeText={password => this.setState({ password })}
             />
-            <Text style={styles.errorStyle}>{this.state.error}</Text>
-
+            <View>
+              <Text style={styles.errorStyle}>{this.state.error}</Text>
+            </View>
             <Button transparent>
               <Text style={{ fontSize: 15, color: "#FFFFFF" }}>
                 Forget Login?
@@ -105,14 +129,7 @@ export default class Login extends Component {
         </Content>
         <Footer>
           <FooterTab style={{ backgroundColor: "#000000" }}>
-            <Button
-              Dark
-              onPress={() =>
-                this.loginUser(this.state.email, this.state.password)
-              }
-            >
-              <Text style={styles.TextStyle}>LOG IN</Text>
-            </Button>
+            {this.renderSpiner()}
           </FooterTab>
         </Footer>
       </Container>
@@ -144,3 +161,4 @@ const styles = StyleSheet.create({
     color: "red"
   }
 });
+export default withNavigation(Login);
