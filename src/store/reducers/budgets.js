@@ -1,5 +1,7 @@
 const budgets = (state = [], action) => {
   switch (action.type) {
+    case "FETCH_BUDGET":
+      return action.payload;
     case "ADD_BUDGET":
       return [action.payload, ...state];
     case "EDIT_BUDGET":

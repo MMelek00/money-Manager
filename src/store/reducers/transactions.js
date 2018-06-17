@@ -1,5 +1,7 @@
 const transactions = (state = [], action) => {
   switch (action.type) {
+    case "FETCH_TRANSACTIONS":
+      return action.payload;
     case "ADD_TRANSACTION":
       return [action.payload, ...state];
     case "EDIT_TRANSACTION":

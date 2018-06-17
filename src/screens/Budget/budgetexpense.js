@@ -19,16 +19,21 @@ import { connect } from "react-redux";
 import DatePicker from "../Operation/Commun/Datepickerr";
 import Categorypicker from "./Categorypicker";
 import { withNavigation } from "react-navigation";
+import moment from "moment";
+import { addBudget } from "../../store/actions/Budget";
 class BudgetExpense extends Component {
   constructor() {
     super();
     this.state = {
       checked: false,
       Amount: "",
-      Date: new Date(),
+      Date: "",
       Category: "Shopping"
     };
   }
+  componentWillMount = () => {
+    this.setState({ Date: moment(new Date()).format("YYYY-MM-DD") });
+  };
   CheckBoxTest() {
     this.setState({
       check: !this.state.check
@@ -46,8 +51,7 @@ class BudgetExpense extends Component {
   pressHandler = () => {
     this.setState({ isClicked: true });
     const { Amount, Date, checked, Category } = this.state;
-    this.props.addbudget({
-      id: 1,
+    this.props.addbudgetProp({
       Amount,
       Date,
       checked,
@@ -113,12 +117,12 @@ class BudgetExpense extends Component {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    addbudget: budget => {
-      dispatch({
-        type: "ADD_BUDGET",
-        payload: budget
-      });
+    addbudgetProp: BudgetE => {
+      return dispatch(addBudget(BudgetE));
     }
   };
 };
-export default connect(null, mapDispatchToProps)(withNavigation(BudgetExpense));
+export default connect(
+  null,
+  mapDispatchToProps
+)(withNavigation(BudgetExpense));

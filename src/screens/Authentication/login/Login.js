@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TextInput, StyleSheet, AsyncStorage } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import {
   Button,
   Text,
@@ -40,11 +40,13 @@ class Login extends Component {
       firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
-        .then(this.setState({ isloading: false, error: "" }))
         .then(response => {
-          AsyncStorage.setItem("userId", response.uid).then(() => {
-            this.props.navigation.navigate("App");
-          });
+          this.setState({ isloading: false, error: "" });
+          return response;
+        })
+        .then(response => {
+          //  AsyncStorage.setItem("userId", response.uid);
+          this.props.navigation.navigate("App");
         });
     } catch (err) {
       this.setState({ error: "Authentification failed", isloading: false });

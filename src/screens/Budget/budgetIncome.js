@@ -12,22 +12,30 @@ import {
   Card,
   CheckBox,
   Body,
-  Title
+  Title,
+  Left,
+  Icon
 } from "native-base";
 import { connect } from "react-redux";
 import DatePicker from "../Operation/Commun/Datepickerr";
 import AccountPicker from "../Operation/Commun/Accountpicker";
 import { withNavigation } from "react-navigation";
+import moment from "moment";
+import { addBudgetIncome } from "../../store/actions/Budget";
+
 class budgetIncome extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       checked: false,
-      Amount: "",
-      Date: new Date(),
+      Amount: "cash",
+      Date: "",
       Category: "Shopping"
     };
   }
+  componentWillMount = () => {
+    this.setState({ Date: moment(new Date()).format("YYYY-MM-DD") });
+  };
   CheckBoxTest() {
     this.setState({
       check: !this.state.check
@@ -45,13 +53,14 @@ class budgetIncome extends Component {
   pressHandler = () => {
     this.setState({ isClicked: true });
     const { Amount, Date, checked, Account } = this.state;
-    this.props.budgetIncome({
+    this.props.addbudgetIncome({
       id: 1,
       Amount,
       Date,
-      checked,
-      Account
+      Account,
+      checked
     });
+    this.props.addIncome(Amount);
     this.props.navigation.pop(1);
   };
   render() {
@@ -61,6 +70,21 @@ class budgetIncome extends Component {
           <Body>
             <Title>Setup Category Budget</Title>
           </Body>
+          <Left>
+            <Button
+              transparent
+              onPress={this.goBack}
+              style={{
+                backgroundColor: "#f1404b",
+                position: "absolute",
+                borderRadius: 100,
+                margin: 10,
+                right: 0
+              }}
+            >
+              <Icon style={{ color: "#FFFFFF" }} name="close" />
+            </Button>
+          </Left>
         </Header>
         <Content style={{ paddingTop: 150 }}>
           <Card>
@@ -111,12 +135,18 @@ class budgetIncome extends Component {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    budgetIncome: budgett => {
+    addbudgetIncome: budgett => {
+      return dispatch(addBudgetIncome(budgett));
+    },
+    addIncome: Amount => {
       dispatch({
-        type: "ADD_BUDGETIncome",
-        payload: budgett
+        type: "ADD_INCOMES",
+        payload: Amount
       });
     }
   };
 };
-export default connect(null, mapDispatchToProps)(withNavigation(budgetIncome));
+export default connect(
+  null,
+  mapDispatchToProps
+)(withNavigation(budgetIncome));

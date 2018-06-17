@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import Expo, { AppLoading } from "expo";
-import * as firebase from "firebase";
 import Routes from "./src/Routes";
-
-import combineReducers from "./src/store/reducers/combineReducers";
+import * as firebase from "firebase";
+import "core-js/es6/symbol";
+import "core-js/fn/symbol/iterator";
+// providers
 import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import reduxThunk from "redux-thunk";
+import { PersistGate } from "redux-persist/es/integration/react";
+import configureStore from "./src/store/createStore";
 
-const store = createStore(combineReducers, {}, applyMiddleware(reduxThunk));
-
-const config = {
+const firebaseConfig = {
   apiKey: "AIzaSyDc94a7eMNA2CFXFPVNAFt1cd-B_VTCC5o",
   authDomain: "moneysaver-f9a18.firebaseapp.com",
   databaseURL: "https://moneysaver-f9a18.firebaseio.com",
@@ -19,6 +18,7 @@ const config = {
   messagingSenderId: "488890179565",
   persistence: true
 };
+const { persistor, store } = configureStore();
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +26,6 @@ class App extends Component {
     this.state = {
       loading: true
     };
-    firebase.initializeApp(config);
   }
 
   async componentWillMount() {
@@ -35,6 +34,7 @@ class App extends Component {
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     });
     this.setState({ loading: false });
+    firebase.initializeApp(firebaseConfig);
   }
 
   render() {
@@ -42,9 +42,11 @@ class App extends Component {
       return <AppLoading />;
     }
     return (
-      <Provider store={store}>
-        <Routes />
-      </Provider>
+      <PersistGate loading={<AppLoading />} persistor={persistor}>
+        <Provider store={store}>
+          <Routes />
+        </Provider>
+      </PersistGate>
     );
   }
 }

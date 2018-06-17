@@ -11,18 +11,20 @@ import {
   Text,
   Title
 } from "native-base";
-import * as firebase from "firebase";
+import { addTransaction } from "../../../store/actions/transactions";
 import { Ionicons } from "@expo/vector-icons";
 import Accountpicker from "../Commun/Accountpicker";
 import DatePicker from "../Commun/Datepickerr";
 //import place from "../Commun/Place";
 import { withNavigation } from "react-navigation";
+import moment from "moment";
+
 class AddExpense extends Component {
   constructor(props) {
     super(props);
     this.state = {
       Amount: "",
-      Date: new Date(),
+      Date: "",
       Description: "",
       Category: "Shopping",
       Account: "Cash",
@@ -30,12 +32,15 @@ class AddExpense extends Component {
       isClicked: false
     };
   }
+  componentWillMount = () => {
+    this.setState({ Date: moment(new Date()).format("YYYY-MM-DD") });
+  };
   pressHandler = () => {
     this.setState({ isClicked: true });
     const { Amount, Date, Description, Account, Place } = this.state;
     const { params } = this.props.navigation.state;
     const Category = params ? params.Category : null;
-    this.props.addTransaction({
+    this.props.addTransactionProp({
       id: 1,
       Amount,
       Date,
@@ -45,6 +50,7 @@ class AddExpense extends Component {
       Place,
       Type: "expense"
     });
+
     this.props.addExpense(Amount);
     this.props.navigation.pop(2);
   };
@@ -189,26 +195,19 @@ const styles = StyleSheet.create({
 });
 const mapDispatchToProps = dispatch => {
   return {
-    addTransaction: transaction => {
-      dispatch({
-        type: "ADD_TRANSACTION",
-        payload: transaction
-      });
+    addTransactionProp: transaction => {
+      return dispatch(addTransaction(transaction));
     },
     addExpense: Amount => {
       dispatch({
         type: "ADD_EXPENSE",
         payload: Amount
       });
-    },
-    addfirebase: transaction => {
-      const { currentUser } = firebase.auth();
-      firebase
-        .database()
-        .ref(`/users/${currentUser.uid}/operation`)
-        .push(transaction.Amount);
     }
   };
 };
 
-export default connect(null, mapDispatchToProps)(withNavigation(AddExpense));
+export default connect(
+  null,
+  mapDispatchToProps
+)(withNavigation(AddExpense));

@@ -12,7 +12,7 @@ import {
   Text
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
-
+import { editTransaction } from "../../../store/actions/transactions";
 import Accountpicker from "../Commun/Accountpicker";
 import DatePicker from "../Commun/Datepickerr";
 import { withNavigation } from "react-navigation";
@@ -49,7 +49,7 @@ class EditExpense extends Component {
     const { Amount, Date, Description, Category, Account, Place } = this.state;
     const { params } = this.props.navigation.state;
     const transaction = params ? params.transaction : null;
-    this.props.editTransaction({
+    this.props.editTransactionProp({
       id: transaction.id,
       Amount,
       Date,
@@ -164,17 +164,10 @@ class EditExpense extends Component {
   }
 }
 
-function edit(transaction) {
-  return {
-    type: "EDIT_TRANSACTION",
-    payload: transaction
-  };
-}
-
 const mapDispatchToProps = dispatch => {
   return {
-    editTransaction: transaction => {
-      dispatch(edit(transaction));
+    editTransactionProp: transaction => {
+      dispatch(editTransaction(transaction));
     }
   };
 };
@@ -211,4 +204,7 @@ const styles = StyleSheet.create({
   iconStyle: { fontSize: 25, color: "#FE788D" }
 });
 
-export default connect(null, mapDispatchToProps)(withNavigation(EditExpense));
+export default connect(
+  null,
+  mapDispatchToProps
+)(withNavigation(EditExpense));

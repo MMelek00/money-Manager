@@ -119,6 +119,6 @@ export default SwitchNavigator(
     Auth: AuthStack
   },
   {
-    initialRouteName: "AuthLoading"
+    initialRouteName: "Auth"
   }
 );

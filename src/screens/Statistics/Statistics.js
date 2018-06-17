@@ -1,8 +1,20 @@
-import React, { Component } from "react";
-//import { Text } from "native-base";
-import Location from "../Operation/Commun/Place";
-export default class Statistics extends Component {
+import React from "react";
+import Categorychart from "./CategoryChart";
+import GradientBarExample from "./ExpeIncomeChart";
+import { View } from "react-native";
+export default class Statistics extends React.PureComponent {
   render() {
-    return <Location />;
+    return (
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "column",
+          justifyContent: "space-between"
+        }}
+      >
+        <Categorychart />
+        <GradientBarExample />
+      </View>
+    );
   }
 }

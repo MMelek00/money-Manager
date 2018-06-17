@@ -1,16 +1,9 @@
 const budgetI = (state = [], action) => {
   switch (action.type) {
-    case "ADD_BUDGETIncome":
+    case "ADD_BUDGETINCOME":
       return [action.payload, ...state];
-    case "EDIT_BUDGETIncome":
-      const index = state.findIndex(
-        budgett => budgett.id === action.payload.id
-      );
-      return [
-        ...state.slice(0, index),
-        action.payload,
-        ...state.slice(index + 1)
-      ];
+      case "FETCH_BUDGETINCOME":
+      return action.payload;
     default:
       return state;
   }

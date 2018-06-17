@@ -7,7 +7,7 @@ const DatePickerr = ({ handleDateChange, date }) => {
       date={date}
       showIcon={false}
       mode="date"
-      format="MMM Do YYYY"
+      format="YYYY-MM-DD"
       minDate="2000-01-01"
       maxDate="2050-01-01"
       confirmBtnText="Confirm"

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { View, TextInput, StyleSheet, AsyncStorage } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import * as firebase from "firebase";
+require("firebase/firestore");
 import {
   Button,
   Text,
@@ -33,39 +34,53 @@ class Signup extends Component {
       error: ""
     };
   }
-  renderSpiner() {
-    if (this.state.isloading) {
-      return <Spinner />;
-    }
-    return (
-      <Button Dark onPress={this.OnsignupPress.bind(this)}>
-        <Text style={styles.TextStyle}>SignUp</Text>
-      </Button>
-    );
-  }
-  OnsignupPress() {
+
+  updateUser = id => {
+    const Username = this.state.Username;
+    const firestore = firebase.firestore();
+    const settings = { timestampsInSnapshots: true };
+    firestore.settings(settings);
+    const DocCol = firestore.collection("User");
+    DocCol.add({
+      Userid: id,
+      Name: Username,
+      AvatarLink: "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
+      expense: 0,
+      income: 0
+    })
+      .then(() => {
+        this.setState({ isloading: false, error: "" });
+        this.props.navigation.navigate("App");
+      })
+      .catch(err => console.log(err));
+  };
+  OnsignupPress = () => {
     const { email, password } = this.state;
     this.setState({ error: "", isloading: true });
     try {
       firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
-        .then(this.setState({ isloading: false, error: "" }))
         .then(response => {
-          AsyncStorage.setItem("userId", response.uid).then(() => {
-            this.props.navigation.navigate("App");
-          });
+          return response;
+        })
+        .then(response => {
+          this.updateUser(response.user.uid);
         });
     } catch (err) {
       this.setState({ error: "Authentification failed", isloading: false });
     }
-  }
-  componentWillUnmount() {
-    var user = firebase.auth().currentUser;
-    user.updateProfile({
-      displayName: this.state.Username,
-      photoURL: "https://example.com/jane-q-user/profile.jpg"
-    });
+  };
+
+  renderSpiner() {
+    if (this.state.isloading) {
+      return <Spinner />;
+    }
+    return (
+      <Button Dark onPress={this.OnsignupPress}>
+        <Text style={styles.TextStyle}>Sign Up</Text>
+      </Button>
+    );
   }
   render() {
     return (
@@ -148,6 +163,7 @@ class Signup extends Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   input: {
     height: 40,

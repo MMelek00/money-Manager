@@ -2,10 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, ScrollView } from "react-native";
 import { Text } from "native-base";
+import { fetchTransactions } from "../../store/actions/transactions";
 import Fab from "../../component/Fab";
 import HeaderComponet from "./Header";
 import CardComponent from "./CardComponent";
 class Overview extends Component {
+  componentDidMount = () => {
+    this.props.fetchTransactionsProp();
+  };
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -34,6 +38,15 @@ class Overview extends Component {
   }
 }
 
-export default connect(store => ({ transactions: store.transactions }))(
-  Overview
-);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchTransactionsProp: transaction => {
+      return dispatch(fetchTransactions());
+    }
+  };
+};
+
+export default connect(
+  store => ({ transactions: store.transactions }),
+  mapDispatchToProps
+)(Overview);

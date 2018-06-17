@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import styles from "./Budgetcss";
 import { Text, Content, ListItem } from "native-base";
 import { View, ScrollView } from "react-native";
-
+import { fetchBudget, fetchBudgetIncome } from "../../store/actions/Budget";
 import BudgetFab from "../../component/BudgetFab";
 import OutcomCard from "./OutcomCard";
 import Header from "./Header";
 import IncomeCard from "./Incomecard";
 import { connect } from "react-redux";
 class BudgetScreen extends Component {
+  componentDidMount = () => {
+    this.props.fetchBudgetProp();
+    this.props.fetchBudgetIProp();
+  };
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -42,7 +46,21 @@ class BudgetScreen extends Component {
     );
   }
 }
-export default connect(store => ({
-  budgets: store.budgets,
-  budgetI: store.budgetI
-}))(BudgetScreen);
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchBudgetProp: budget => {
+      return dispatch(fetchBudget());
+    },
+    fetchBudgetIProp: budgett => {
+      return dispatch(fetchBudgetIncome());
+    }
+  };
+};
+export default connect(
+  store => ({
+    budgets: store.budgets,
+    budgetI: store.budgetI
+  }),
+  mapDispatchToProps
+)(BudgetScreen);
