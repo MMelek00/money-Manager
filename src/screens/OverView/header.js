@@ -34,7 +34,7 @@ class HeaderComponet extends Component {
               textAlign: "center"
             }}
           >
-            {this.props.statistics.total}£
+            {this.props.statistics.total}Dt
           </Text>
           <Grid>
             <Row>
@@ -50,7 +50,7 @@ class HeaderComponet extends Component {
                     </Col>
                     <Col>
                       <Text style={styles.NumStyle}>
-                        {this.props.statistics.income}
+                        {this.props.statistics.income} Dt
                       </Text>
                       <Text style={{ fontFamily: "Roboto_medium" }}>
                         Inscomes
@@ -71,7 +71,7 @@ class HeaderComponet extends Component {
                     </Col>
                     <Col>
                       <Text style={styles.NumStyle}>
-                        {this.props.statistics.expenses}
+                        {this.props.statistics.expenses} Dt
                       </Text>
                       <Text
                         style={{ fontSize: 15, fontFamily: "Roboto_medium" }}

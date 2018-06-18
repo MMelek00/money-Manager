@@ -72,7 +72,7 @@ export default class Categorychart extends React.PureComponent {
             textAlign: "center"
           }}
         >
-          {`${label} \n ${value} £`}
+          {`${label} \n ${value} Dt`}
         </Text>
       </View>
     );
