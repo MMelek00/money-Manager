@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, ActivityIndicator } from "react-native";
 import { Text } from "native-base";
 import { fetchTransactions } from "../../store/actions/transactions";
 import Fab from "../../component/Fab";
@@ -28,6 +28,9 @@ class Overview extends Component {
           </Text>
         </View>
         <ScrollView style={{ flex: 1, paddingHorizontal: 10 }}>
+          {
+            this.props.transactions === [] && (<ActivityIndicator size="large" color="#0000ff" />)
+          }
           {this.props.transactions.map((transaction, index) => (
             <CardComponent transaction={transaction} key={index} />
           ))}

@@ -5,31 +5,13 @@ import { View, Text } from "react-native";
 export default class Statistics extends React.PureComponent {
   render() {
     return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "column",
-          justifyContent: "space-between"
-        }}
-      >
-        <View>
+      <View style={{ flex: 1 }}>
+        <Categorychart />
+        <View style={{ flex: 1 }}>
           <Text
             style={{
               fontFamily: "Roboto_medium",
-              color: "white",
-              fontSize: 25
-            }}
-          >
-            {" "}
-            division of Expenses Per Category
-          </Text>
-          <Categorychart />
-        </View>
-        <View>
-          <Text
-            style={{
-              fontFamily: "Roboto_medium",
-              color: "white",
+              color: "tomato",
               fontSize: 25
             }}
           >

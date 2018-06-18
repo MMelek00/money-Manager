@@ -19,6 +19,9 @@ import {
 import { Image } from "react-native";
 import { withNavigation } from "react-navigation";
 import SocialButtons from "./SocialButtons";
+import fetchStatistics from "../../../store/actions/statistics";
+import { connect } from "react-redux";
+
 
 class Signup extends Component {
   goBack = () => {
@@ -51,6 +54,7 @@ class Signup extends Component {
       .then(() => {
         this.setState({ isloading: false, error: "" });
         this.props.navigation.navigate("App");
+        this.props.navigation.navigate("App");
       })
       .catch(err => console.log(err));
   };
@@ -65,6 +69,7 @@ class Signup extends Component {
           return response;
         })
         .then(response => {
+          this.props.resetStatistics();
           this.updateUser(response.user.uid);
         });
     } catch (err) {
@@ -189,4 +194,16 @@ const styles = StyleSheet.create({
     color: "red"
   }
 });
-export default withNavigation(Signup);
+const mapDispatchToProps = dispatch => {
+  return {
+    resetStatistics: () => {
+      dispatch({
+        type: "RESET_STATS"
+      });
+    }
+  };
+};
+export default connect(
+  null,
+  mapDispatchToProps
+)(withNavigation(Signup));

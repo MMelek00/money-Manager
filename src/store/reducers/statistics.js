@@ -10,8 +10,8 @@ const statistics = (state = initStatistics, action) => {
       const newIncome = Number(state.income) + Number(action.payload);
       const newTotall = Number(state.total) + Number(action.payload);
       return { ...state, total: newTotall, income: newIncome };
-    case "RESET_EXPENSE":
-      return 0;
+    case "RESET_STATS":
+      return { total: 0, income: 0, expenses: 0 };
     default:
       return state;
   }

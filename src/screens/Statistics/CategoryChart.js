@@ -1,8 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Text, View, Dimensions } from "react-native";
 import { PieChart } from "react-native-svg-charts";
 
-export default class Categorychart extends React.PureComponent {
+class Categorychart extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,16 +17,19 @@ export default class Categorychart extends React.PureComponent {
   render() {
     const { labelWidth, selectedSlice } = this.state;
     const { label, value } = selectedSlice;
-    const keys = [
-      "Shopping",
-      "Clothing",
-      "Education",
-      "Family",
-      "Health",
-      "House",
-      "Food And Drink"
-    ];
-    const values = [15, 25, 35, 45, 55, 65, 75];
+    let keys = [];
+
+    this.props.transactions.reduce((res, value) => {
+      if (!res[value.Category]) {
+        res[value.Category] = {
+          Amount: 0,
+          Category: value.Category
+        };
+        keys.push(res[value.Category]);
+      }
+      res[value.Category].Amount = Number(res[value.Category].Amount) + Number(value.Amount);
+      return res;
+    }, {});
     const colors = [
       "#600080",
       "#9900cc",
@@ -36,24 +40,31 @@ export default class Categorychart extends React.PureComponent {
       "#e187ff"
     ];
     const data = keys.map((key, index) => {
+
       return {
-        key,
-        value: values[index],
+        key: key.Category,
+        value: key.Amount,
         svg: { fill: colors[index] },
-        arc: {
-          outerRadius: 70 + values[index] + "%",
-          padAngle: label === key ? 0.1 : 0
-        },
         onPress: () =>
-          this.setState({ selectedSlice: { label: key, value: values[index] } })
+          this.setState({ selectedSlice: { label: key.Category, value: key.Amount } })
       };
     });
     const deviceWidth = Dimensions.get("window").width;
 
     return (
-      <View style={{ justifyContent: "center", flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        <Text
+          style={{
+            fontFamily: "Roboto_medium",
+            color: "tomato",
+            fontSize: 25,
+          }}
+        >
+          {" "}
+          Division of Expenses Per Category
+          </Text>
         <PieChart
-          style={{ height: 250 }}
+          style={{ flex: 1, justifyContent: "center" }}
           outerRadius={"80%"}
           innerRadius={"45%"}
           data={data}
@@ -69,7 +80,8 @@ export default class Categorychart extends React.PureComponent {
           style={{
             position: "absolute",
             left: deviceWidth / 2 - labelWidth / 2,
-            textAlign: "center"
+            textAlign: "center",
+            top: 165
           }}
         >
           {`${label} \n ${value} Dt`}
@@ -78,3 +90,7 @@ export default class Categorychart extends React.PureComponent {
     );
   }
 }
+
+export default connect(
+  store => ({ transactions: store.transactions })
+)(Categorychart);
